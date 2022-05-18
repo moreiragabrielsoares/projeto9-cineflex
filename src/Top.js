@@ -3,6 +3,8 @@
 
 export default function Top() {
     return (
-        <div>TOPPPPP</div>
+        <div className="topContainer">
+            <div className="topTitle"> CINEFLEX </div>
+        </div>
     )
 }
