@@ -30,13 +30,15 @@
 
 
 
-.selectFilmContainer {
+
+
+.pageContainer {
     margin-top: 67px;
     display: flex;
     flex-direction: column;
 }
 
-.selectFilmTitle {
+.pageTitle {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -45,6 +47,10 @@
     font-size: 24px;
     color: #293845;
 }
+
+
+
+
 
 .filmsContainer {
     display: flex;
@@ -65,4 +71,75 @@
 .filmPoster > img {
     width: 129px;
     height: 193px;
+}
+
+
+
+
+
+
+.dayContainer {
+    padding: 0 20px;
+    margin-bottom: 25px;
+}
+
+.dayContainer > span {
+    font-weight: 400;
+    font-size: 20px;
+    color: #293845;
+}
+
+.sessionTimesContainer {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.sessionTime {
+    width: 83px;
+    height: 43px;
+    background: #E8833A;
+    border-radius: 3px;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    margin-right: 10px;
+}
+
+
+
+
+.footer {
+    height: 117px;
+    width: 100% ;
+    display: flex;
+    align-items: center;
+    padding: 14px 10px;
+    background-color: #DFE6ED;
+    border-top: 1px solid #9EADBA;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+.filmPosterFooter {
+    width: 64px;
+    height: 89px;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
+    padding: 6px;
+}
+
+.filmPosterFooter > img {
+    width: 52px;
+    height: 76px;
+}
+
+.footer > span {
+    font-weight: 400;
+    font-size: 22px;
+    color: #293845;
+    margin-left: 15px;
 }

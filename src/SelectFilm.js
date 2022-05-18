@@ -32,8 +32,8 @@ export default function SelectFilm() {
     
     return (
         <>
-            <div className="selectFilmContainer">
-                <div className="selectFilmTitle">
+            <div className="pageContainer">
+                <div className="pageTitle">
                     <span>Selecione o filme</span>
                 </div>
                 <div className="filmsContainer">
