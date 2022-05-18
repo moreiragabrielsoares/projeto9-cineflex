@@ -16,8 +16,8 @@ export default function App() {
             <Top />
             <Routes>
                 <Route path="/" element={<SelectFilm />} />
-                <Route path="/sessoes" element={<SelectSession />} />
-                <Route path="/assentos" element={<SelectSeat />} />
+                <Route path="/sessoes/:idFilme" element={<SelectSession />} />
+                <Route path="/assentos/:idSessao" element={<SelectSeat />} />
                 <Route path="/sucesso" element={<SuccessfullSelection />} />
             </Routes>
         </BrowserRouter>
