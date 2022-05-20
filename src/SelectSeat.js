@@ -23,7 +23,7 @@ function MapOfSeats ({isAvailable, seatName, idSeat, seatsObj, setSeatsObj}) {
 
     if (!isAvailable) {
         return (
-            <div className="seatButton seatNotAvailable">
+            <div className="seatButton seatNotAvailable" onClick={() => alert("Esse assento não está disponível")}>
                 {seatName}
             </div>
         )
