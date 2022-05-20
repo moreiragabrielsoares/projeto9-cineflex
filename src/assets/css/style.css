@@ -34,6 +34,7 @@
 
 .pageContainer {
     margin-top: 67px;
+    margin-bottom: 117px;
     display: flex;
     flex-direction: column;
 }
@@ -137,9 +138,94 @@
     height: 76px;
 }
 
-.footer > span {
+.footer  span {
     font-weight: 400;
     font-size: 22px;
     color: #293845;
     margin-left: 15px;
+}
+
+.infosContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+
+.seatsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 13px 0 20px;
+}
+
+.seatsMap {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.seatButton {
+    width: 26px;
+    height: 26px;
+    background: #C3CFD9;
+    border: 1px solid #808F9D;
+    border-radius: 50%;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    margin-right: 8px;
+}
+
+.seatButton:hover {
+    cursor: pointer;
+}
+
+
+.exampleContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.exampleContainer > .seatButton {
+    margin: 0 0 5px 0;
+}
+
+.exampleContainer > span {
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 13px;
+    color: #4E5A65;
+}
+
+
+.seatsExamples {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.seatSelected {
+    background: #8DD7CF;
+    border: 1px solid #1AAE9E
+}
+
+.seatAvailable {
+    background: #C3CFD9;
+    border: 1px solid #7B8B99
+}
+
+.seatNotAvailable {
+    background: #FBE192;
+    border: 1px solid #F7C52B; 
 }
