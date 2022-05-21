@@ -46,6 +46,24 @@ function MapOfSeats ({isAvailable, seatName, idSeat, seatsObj, setSeatsObj}) {
 
 
 
+function BuyerForm () {
+    
+    const [buyerName, setBuyerName] = useState("");
+    const [buyerCpf, setBuyerCpf] = useState("");
+    
+    return (
+        <form>
+            <label for="buyerName">Nome do comprador:</label>
+            <input id="buyerName" placeholder="Digite seu nome..." onChange={e => setBuyerName(e.target.value)} value={buyerName}/>
+            <label for="buyerCpf">CPF do comprador:</label>
+            <input id="buyerCpf" placeholder="Digite seu CPF..." onChange={e => setBuyerCpf(e.target.value)} value={buyerCpf}/>
+            <button type="submit">{`Reservar assento(s)`}</button>
+        </form>
+    )
+}
+
+
+
 
 export default function SelectSeat() {
     
@@ -107,10 +125,10 @@ export default function SelectSeat() {
                             <span>Indisponível</span>
                         </div>
                         
-                        
                     </div>
-
                 </div>
+
+                <BuyerForm />
 
             </div>
 
