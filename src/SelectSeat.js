@@ -4,10 +4,11 @@ import { useState, useEffect } from 'react';
 
 
 
-function MapOfSeats ({isAvailable, seatName, idSeat, seatsObj, setSeatsObj}) { 
+function MapOfSeats ({isAvailable, seatName, idSeat, seatsObj, setSeatsObj, seatsSelected, setSeatsSelected}) { 
     
     function markSeat (idSeat) {
         const aux = seatsObj;
+        const temp = [];
         for (let i = 0 ; i < aux.seats.length; i++) {
             if (idSeat === aux.seats[i].id) {
                 if (aux.seats[i].isAvailable === "Selected") {
@@ -16,8 +17,13 @@ function MapOfSeats ({isAvailable, seatName, idSeat, seatsObj, setSeatsObj}) {
                     aux.seats[i].isAvailable = "Selected";
                 }
             }
+
+            if (aux.seats[i].isAvailable === "Selected") {
+                temp.push(aux.seats[i].id);
+            }
         }
         setSeatsObj({... aux});
+        setSeatsSelected([... temp]);
     }
     
 
@@ -46,17 +52,47 @@ function MapOfSeats ({isAvailable, seatName, idSeat, seatsObj, setSeatsObj}) {
 
 
 
-function BuyerForm () {
+function BuyerForm ({ seatsSelected }) {
     
     const [buyerName, setBuyerName] = useState("");
     const [buyerCpf, setBuyerCpf] = useState("");
+
+
+    function reserveSeats (event) {
+        event.preventDefault();
+        console.log(seatsSelected);
+
+        const seatsSelectedObj = {
+            ids: seatsSelected,
+            name: buyerName,
+            cpf: buyerCpf
+        }
+
+        const request = axios.post("https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many", seatsSelectedObj);
+
+        request.then((res) => {console.log(res.data)});
+    }
     
     return (
-        <form>
-            <label for="buyerName">Nome do comprador:</label>
-            <input id="buyerName" placeholder="Digite seu nome..." onChange={e => setBuyerName(e.target.value)} value={buyerName}/>
-            <label for="buyerCpf">CPF do comprador:</label>
-            <input id="buyerCpf" placeholder="Digite seu CPF..." onChange={e => setBuyerCpf(e.target.value)} value={buyerCpf}/>
+        <form onSubmit={reserveSeats}>
+            <label htmlFor="buyerName">Nome do comprador:</label>
+            <input 
+                id="buyerName" 
+                placeholder="Digite seu nome..." 
+                onChange={e => setBuyerName(e.target.value)} 
+                value={buyerName}
+                type="text"
+                required
+            />
+            <label htmlFor="buyerCpf">CPF do comprador:</label>
+            <input 
+                id="buyerCpf" 
+                placeholder="Digite seu CPF..." 
+                onChange={e => setBuyerCpf(e.target.value)} 
+                value={buyerCpf}
+                type="text"
+                required
+            />
             <button type="submit">{`Reservar assento(s)`}</button>
         </form>
     )
@@ -70,6 +106,8 @@ export default function SelectSeat() {
     const { idSessao } = useParams();
     
     const [seatsObj, setSeatsObj] = useState({});
+
+    const [seatsSelected, setSeatsSelected] = useState([]);
 
 	useEffect(() => {
 		const promise = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${idSessao}/seats`);
@@ -106,6 +144,8 @@ export default function SelectSeat() {
                                         idSeat={seat.id}
                                         seatsObj={seatsObj}
                                         setSeatsObj={setSeatsObj}
+                                        seatsSelected={seatsSelected}
+                                        setSeatsSelected={setSeatsSelected}
                                     />)}
                             </>
                             ) : ("Carregando Assentos...")}
@@ -128,7 +168,7 @@ export default function SelectSeat() {
                     </div>
                 </div>
 
-                <BuyerForm />
+                <BuyerForm seatsSelected={seatsSelected}/>
 
             </div>
 
