@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 
@@ -56,7 +56,7 @@ function BuyerForm ({ seatsSelected }) {
     
     const [buyerName, setBuyerName] = useState("");
     const [buyerCpf, setBuyerCpf] = useState("");
-
+    const navigate = useNavigate();
 
     function reserveSeats (event) {
         event.preventDefault();
@@ -70,7 +70,10 @@ function BuyerForm ({ seatsSelected }) {
 
         const request = axios.post("https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many", seatsSelectedObj);
 
-        request.then((res) => {console.log(res.data)});
+        request
+            .then((res) => {
+                console.log(res.data)
+                navigate("/sucesso")});
     }
     
     return (
