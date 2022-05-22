@@ -270,6 +270,10 @@ form > button {
     margin: 10px auto;
 }
 
+form > button:hover{
+    cursor: pointer;
+}
+
 
 .successfullContainer{
     display: flex;
@@ -320,4 +324,8 @@ form > button {
     color: #FFFFFF;
     border: 0px;
     margin: 20px auto;
+}
+
+.successButton:hover {
+    cursor: pointer;
 }
