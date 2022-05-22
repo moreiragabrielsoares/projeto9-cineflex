@@ -1,4 +1,4 @@
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 
@@ -8,7 +8,7 @@ function MapOfSeats ({isAvailable, seatName, idSeat, seatsObj, setSeatsObj, seat
     
     function markSeat (idSeat) {
         const aux = seatsObj;
-        const temp = [];
+        const temp = {seatsId:[], seatsName:[]};
         for (let i = 0 ; i < aux.seats.length; i++) {
             if (idSeat === aux.seats[i].id) {
                 if (aux.seats[i].isAvailable === "Selected") {
@@ -19,11 +19,12 @@ function MapOfSeats ({isAvailable, seatName, idSeat, seatsObj, setSeatsObj, seat
             }
 
             if (aux.seats[i].isAvailable === "Selected") {
-                temp.push(aux.seats[i].id);
+                temp.seatsId.push(aux.seats[i].id);
+                temp.seatsName.push(aux.seats[i].name)
             }
         }
-        setSeatsObj({... aux});
-        setSeatsSelected([... temp]);
+        setSeatsObj({...aux});
+        setSeatsSelected({...temp});
     }
     
 
@@ -52,7 +53,7 @@ function MapOfSeats ({isAvailable, seatName, idSeat, seatsObj, setSeatsObj, seat
 
 
 
-function BuyerForm ({ seatsSelected }) {
+function BuyerForm ({ seatsSelected, seatsObj, setRequestInfos }) {
     
     const [buyerName, setBuyerName] = useState("");
     const [buyerCpf, setBuyerCpf] = useState("");
@@ -60,20 +61,29 @@ function BuyerForm ({ seatsSelected }) {
 
     function reserveSeats (event) {
         event.preventDefault();
-        console.log(seatsSelected);
 
         const seatsSelectedObj = {
-            ids: seatsSelected,
+            ids: seatsSelected.seatsId,
             name: buyerName,
-            cpf: buyerCpf
+            cpf: buyerCpf,
         }
 
         const request = axios.post("https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many", seatsSelectedObj);
 
         request
             .then((res) => {
-                console.log(res.data)
-                navigate("/sucesso")});
+                navigate("/sucesso")})
+        ;
+        
+
+        setRequestInfos({
+            filmName: `${seatsObj.movie.title}`,
+            day: `${seatsObj.day.date}`,
+            schedule: `${seatsObj.name}`,
+            buyerName,
+            buyerCpf,
+            ...seatsSelected
+        });
     }
     
     return (
@@ -104,13 +114,13 @@ function BuyerForm ({ seatsSelected }) {
 
 
 
-export default function SelectSeat() {
+export default function SelectSeat({ setRequestInfos }) {
     
     const { idSessao } = useParams();
     
     const [seatsObj, setSeatsObj] = useState({});
 
-    const [seatsSelected, setSeatsSelected] = useState([]);
+    const [seatsSelected, setSeatsSelected] = useState({});
 
 	useEffect(() => {
 		const promise = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${idSessao}/seats`);
@@ -122,9 +132,6 @@ export default function SelectSeat() {
         promise.catch(erro => console.log("Status code:" + erro.response.status))
         
 	}, []);
-    
-    console.log(seatsObj);
-    
     
     
     return (
@@ -171,7 +178,7 @@ export default function SelectSeat() {
                     </div>
                 </div>
 
-                <BuyerForm seatsSelected={seatsSelected}/>
+                <BuyerForm seatsSelected={seatsSelected} seatsObj={seatsObj} setRequestInfos={setRequestInfos}/>
 
             </div>
 

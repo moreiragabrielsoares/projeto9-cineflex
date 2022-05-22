@@ -269,3 +269,55 @@ form > button {
     color: #FFFFFF;
     margin: 10px auto;
 }
+
+
+.successfullContainer{
+    display: flex;
+    flex-direction: column;
+    margin: 0 20px;
+}
+
+.successfullTitle {
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-size: 24px;
+    color: #247A6B;
+    width: 150px;
+    text-align: center;
+}
+
+
+.infoContainer {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 25px;
+}
+
+.infoTitle {
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-size: 24px;
+    color: #293845;
+    margin-bottom: 10px;
+}
+
+.info {
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 22px;
+    color: #293845;
+    margin-bottom: 5px;
+}
+
+.successButton {
+    width: 225px;
+    height: 42px;
+    background: #E8833A;
+    border-radius: 3px;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 18px;
+    color: #FFFFFF;
+    border: 0px;
+    margin: 20px auto;
+}

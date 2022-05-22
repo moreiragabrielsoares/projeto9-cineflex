@@ -24,9 +24,12 @@ export default function SelectFilm() {
 	useEffect(() => {
 		const promise = axios.get("https://mock-api.driven.com.br/api/v5/cineflex/movies");
 
-		promise.then(response => {
-			setFilmsList(response.data);
-		});
+		promise
+            .then(response => {
+                setFilmsList(response.data);
+            });
+            
+        promise.catch(erro => console.log("Status code:" + erro.response.status))
 	}, []);
     
     
