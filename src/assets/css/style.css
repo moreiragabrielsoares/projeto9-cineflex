@@ -329,3 +329,19 @@ form > button:hover{
 .successButton:hover {
     cursor: pointer;
 }
+
+
+::-webkit-input-placeholder { /* Edge */
+    padding-left: 10px;
+    font-style: italic;
+  }
+  
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    padding-left: 10px;
+    font-style: italic;
+  }
+  
+  ::placeholder {
+    padding-left: 10px;
+    font-style: italic;
+  }

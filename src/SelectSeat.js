@@ -59,31 +59,47 @@ function BuyerForm ({ seatsSelected, seatsObj, setRequestInfos }) {
     const [buyerCpf, setBuyerCpf] = useState("");
     const navigate = useNavigate();
 
+    const cpfMask = value => {
+        return value
+          .replace(/\D/g, '') // substitui qualquer caracter que nao seja numero por nada
+          .replace(/(\d{3})(\d)/, '$1.$2') // captura 2 grupos de numero o primeiro de 3 e o segundo de 1, apos capturar o primeiro grupo ele adiciona um ponto antes do segundo grupo de numero
+          .replace(/(\d{3})(\d)/, '$1.$2')
+          .replace(/(\d{3})(\d{1,2})/, '$1-$2')
+          .replace(/(-\d{2})\d+?$/, '$1') // captura 2 numeros seguidos de um traço e não deixa ser digitado mais nada
+      }
+
+
     function reserveSeats (event) {
         event.preventDefault();
 
-        const seatsSelectedObj = {
-            ids: seatsSelected.seatsId,
-            name: buyerName,
-            cpf: buyerCpf,
+        if (buyerCpf.length !== 14) {
+            alert("CPF inválido");
+        } else {
+
+            const seatsSelectedObj = {
+                ids: seatsSelected.seatsId,
+                name: buyerName,
+                cpf: buyerCpf,
+            }
+    
+            const request = axios.post("https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many", seatsSelectedObj);
+    
+            request
+                .then((res) => {
+                    navigate("/sucesso")})
+            ;
+            
+    
+            setRequestInfos({
+                filmName: `${seatsObj.movie.title}`,
+                day: `${seatsObj.day.date}`,
+                schedule: `${seatsObj.name}`,
+                buyerName,
+                buyerCpf,
+                ...seatsSelected
+            });
         }
 
-        const request = axios.post("https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many", seatsSelectedObj);
-
-        request
-            .then((res) => {
-                navigate("/sucesso")})
-        ;
-        
-
-        setRequestInfos({
-            filmName: `${seatsObj.movie.title}`,
-            day: `${seatsObj.day.date}`,
-            schedule: `${seatsObj.name}`,
-            buyerName,
-            buyerCpf,
-            ...seatsSelected
-        });
     }
     
     return (
@@ -101,7 +117,7 @@ function BuyerForm ({ seatsSelected, seatsObj, setRequestInfos }) {
             <input 
                 id="buyerCpf" 
                 placeholder="Digite seu CPF..." 
-                onChange={e => setBuyerCpf(e.target.value)} 
+                onChange={e => setBuyerCpf(cpfMask(e.target.value))} 
                 value={buyerCpf}
                 type="text"
                 required
