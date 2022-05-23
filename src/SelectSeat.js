@@ -74,30 +74,38 @@ function BuyerForm ({ seatsSelected, seatsObj, setRequestInfos }) {
 
         if (buyerCpf.length !== 14) {
             alert("CPF inválido");
+
         } else {
 
-            const seatsSelectedObj = {
-                ids: seatsSelected.seatsId,
-                name: buyerName,
-                cpf: buyerCpf,
+            if (seatsSelected.seatsId.length === 0) {
+                alert("Nenhum assento selecionado");
+
+            } else {
+
+                const seatsSelectedObj = {
+                    ids: seatsSelected.seatsId,
+                    name: buyerName,
+                    cpf: buyerCpf,
+                }
+        
+                const request = axios.post("https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many", seatsSelectedObj);
+        
+                request
+                    .then((res) => {
+                        navigate("/sucesso")})
+                ;
+                
+        
+                setRequestInfos({
+                    filmName: `${seatsObj.movie.title}`,
+                    day: `${seatsObj.day.date}`,
+                    schedule: `${seatsObj.name}`,
+                    buyerName,
+                    buyerCpf,
+                    ...seatsSelected
+                });
+
             }
-    
-            const request = axios.post("https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many", seatsSelectedObj);
-    
-            request
-                .then((res) => {
-                    navigate("/sucesso")})
-            ;
-            
-    
-            setRequestInfos({
-                filmName: `${seatsObj.movie.title}`,
-                day: `${seatsObj.day.date}`,
-                schedule: `${seatsObj.name}`,
-                buyerName,
-                buyerCpf,
-                ...seatsSelected
-            });
         }
 
     }
